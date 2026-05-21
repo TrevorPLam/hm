@@ -12,18 +12,24 @@ import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { setBaseUrl } from "@workspace/api-client-react";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+// Wire up API base URL for Expo — must be outside component
+if (process.env.EXPO_PUBLIC_DOMAIN) {
+  setBaseUrl(`https://${process.env.EXPO_PUBLIC_DOMAIN}`);
+}
+
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
 function RootLayoutNav() {
   return (
-    <Stack screenOptions={{ headerBackTitle: "Back" }}>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="chat" />
     </Stack>
   );
 }

@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "kD2k1sFuLn2diq6PFjGzh"
+uri = "file://artifacts/mobile/assets/images/icon.png"
+type = "image"
+title = "aria ai icon"
