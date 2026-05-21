@@ -582,7 +582,7 @@ M-06, V-01.
 
 ## M-04 — Move lib/db to packages/db
 
-- [ ] **M-04** `PENDING`
+- [x] **M-04** `DONE`
 
 ### Files
 - `lib/db/` → `packages/db/`
@@ -623,7 +623,10 @@ M-05.
 | M-04-02 | `artifacts/api-server/tsconfig.json` | Update all project references in one pass: `../../lib/db` → `../../packages/db`, `../../lib/api-zod` → `../../packages/api-zod`; keep `../../lib/integrations-openai-ai-server` unchanged. |
 | M-04-03 | `packages/db/drizzle.config.ts` | Verify `schema: path.join(__dirname, './src/schema/index.ts')` remains valid after the move. No edit required — verification only. |
 | M-04-04 | — | Run `pnpm install` from root. Confirm exit 0. |
-| M-04-05 | — | Run `pnpm --filter @workspace/api-server run typecheck`. Confirm exit 0. |
+| M-04-05 | — | Run `pnpm --filter @workspace/api-server run typecheck`. Confirm exit 0. ✅ |
+
+### Implementation Notes
+- git mv failed with permission error on Windows; used xcopy + git rm + git add as workaround (same as M-02 and M-03)
 
 ***
 

@@ -44,7 +44,7 @@ importers:
         specifier: ~5.9.3
         version: 5.9.3
 
-  artifacts/api-server:
+  apps/api:
     dependencies:
       '@workspace/api-zod':
         specifier: workspace:*
