@@ -632,7 +632,7 @@ M-05.
 
 ## M-05 — Move artifacts/api-server to apps/api
 
-- [ ] **M-05** `PENDING`
+- [x] **M-05** `DONE`
 
 ### Files
 - `artifacts/api-server/` → `apps/api/`
@@ -673,7 +673,11 @@ Nothing.
 | M-05-02 | `apps/api/tsconfig.json` | Verify the references array contains `../../packages/db`, `../../packages/api-zod`, and `../../lib/integrations-openai-ai-server`. No edit required — verification only. |
 | M-05-03 | `apps/api/package.json` | If the package name still reads `@workspace/api-server`, rename it to `@workspace/api`. Keep scripts unchanged otherwise. |
 | M-05-04 | — | Run `pnpm install` from root. Confirm exit 0. |
-| M-05-05 | — | Run `pnpm --filter @workspace/api run typecheck`. Confirm exit 0. |
+| M-05-05 | — | Run `pnpm --filter @workspace/api run typecheck`. Confirm exit 0. ✅ |
+
+### Implementation Notes
+- git mv failed with permission error on Windows; used xcopy + git rm + git add as workaround (same as M-02, M-03, and M-04)
+- Package name renamed from @workspace/api-server to @workspace/api as specified in M-05-03
 
 ***
 
