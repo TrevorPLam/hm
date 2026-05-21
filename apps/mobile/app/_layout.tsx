@@ -16,9 +16,13 @@ import { setBaseUrl } from "@workspace/api-client";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-// Wire up API base URL for Expo — must be outside component
-if (process.env.EXPO_PUBLIC_DOMAIN) {
-  setBaseUrl(`https://${process.env.EXPO_PUBLIC_DOMAIN}`);
+const apiBaseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
+const domain = process.env.EXPO_PUBLIC_DOMAIN;
+
+if (apiBaseUrl) {
+  setBaseUrl(apiBaseUrl);
+} else if (domain) {
+  setBaseUrl(`https://${domain}`);
 }
 
 SplashScreen.preventAutoHideAsync();

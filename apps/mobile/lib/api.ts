@@ -4,13 +4,15 @@ let _baseUrl = "";
 
 export function getApiUrl(): string {
   if (_baseUrl) return _baseUrl;
+  const apiBaseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
+  if (apiBaseUrl) return `${apiBaseUrl.replace(/\/+$/, "")}/`;
   const domain = process.env.EXPO_PUBLIC_DOMAIN;
   if (domain) return `https://${domain}/`;
-  return "http://localhost/";
+  return "http://localhost:3000/";
 }
 
 export function setApiBaseUrl(url: string) {
-  _baseUrl = url;
+  _baseUrl = `${url.replace(/\/+$/, "")}/`;
 }
 
 export interface StreamChunk {

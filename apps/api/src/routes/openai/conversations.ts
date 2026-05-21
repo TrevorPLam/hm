@@ -5,6 +5,7 @@ import { openai } from "@workspace/integrations-openai-ai-server";
 import { eq, asc } from "drizzle-orm";
 
 const router = Router();
+const chatModel = process.env.AI_CHAT_MODEL ?? "gemini-2.0-flash";
 
 // List all conversations
 router.get("/", async (req, res) => {
@@ -114,7 +115,7 @@ router.post("/:id/messages", async (req, res) => {
 
   try {
     const stream = await openai.chat.completions.create({
-      model: "gpt-5.4",
+      model: chatModel,
       max_completion_tokens: 8192,
       messages: chatMessages,
       stream: true,
