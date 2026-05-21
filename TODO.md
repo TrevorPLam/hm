@@ -158,7 +158,7 @@ Nothing.
 
 ## R-01 — Create top-level directory skeleton
 
-- [ ] **R-01** `PENDING`
+- [x] **R-01** `DONE`
 
 ### Files
 - `apps/.gitkeep` (new)
@@ -199,15 +199,15 @@ E-01, R-02, M-01, M-02, M-03, M-04, M-05, M-06.
 
 | ID | File | Action |
 |----|------|--------|
-| R-01-01 | `apps/.gitkeep` | `mkdir -p apps && touch apps/.gitkeep` |
-| R-01-02 | `packages/.gitkeep` | `mkdir -p packages && touch packages/.gitkeep` |
-| R-01-03 | `packages/ui/.gitkeep` | `mkdir -p packages/ui && touch packages/ui/.gitkeep` |
-| R-01-04 | `services/.gitkeep` | `mkdir -p services && touch services/.gitkeep` |
-| R-01-05 | `infra/terraform/.gitkeep` | `mkdir -p infra/terraform && touch infra/terraform/.gitkeep` |
-| R-01-06 | `infra/kubernetes/base/.gitkeep` | `mkdir -p infra/kubernetes/base && touch infra/kubernetes/base/.gitkeep` |
-| R-01-07 | `infra/kubernetes/overlays/.gitkeep` | `mkdir -p infra/kubernetes/overlays && touch infra/kubernetes/overlays/.gitkeep` |
-| R-01-08 | `infra/docker/.gitkeep` | `mkdir -p infra/docker && touch infra/docker/.gitkeep` |
-| R-01-09 | — | `git add apps packages services infra` — confirm all `.gitkeep` files are staged. |
+| R-01-01 | `apps/.gitkeep` | `mkdir -p apps && touch apps/.gitkeep` ✅ |
+| R-01-02 | `packages/.gitkeep` | `mkdir -p packages && touch packages/.gitkeep` ✅ |
+| R-01-03 | `packages/ui/.gitkeep` | `mkdir -p packages/ui && touch packages/ui/.gitkeep` ✅ |
+| R-01-04 | `services/.gitkeep` | `mkdir -p services && touch services/.gitkeep` ✅ |
+| R-01-05 | `infra/terraform/.gitkeep` | `mkdir -p infra/terraform && touch infra/terraform/.gitkeep` ✅ |
+| R-01-06 | `infra/kubernetes/base/.gitkeep` | `mkdir -p infra/kubernetes/base && touch infra/kubernetes/base/.gitkeep` ✅ |
+| R-01-07 | `infra/kubernetes/overlays/.gitkeep` | `mkdir -p infra/kubernetes/overlays && touch infra/kubernetes/overlays/.gitkeep` ✅ |
+| R-01-08 | `infra/docker/.gitkeep` | `mkdir -p infra/docker && touch infra/docker/.gitkeep` ✅ |
+| R-01-09 | — | `git add apps packages services infra` — confirm all `.gitkeep` files are staged. ✅ |
 
 ***
 
