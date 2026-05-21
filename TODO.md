@@ -351,7 +351,7 @@ Nothing.
 
 ## D-07 — Clean pnpm-workspace.yaml platform-specific and stale entries
 
-- [ ] **D-07** `PENDING`
+- [x] **D-07** `DONE`
 
 ### Files
 - `pnpm-workspace.yaml`
