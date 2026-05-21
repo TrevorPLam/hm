@@ -11,7 +11,7 @@
       "path": "../../lib/db"
     },
     {
-      "path": "../../lib/api-zod"
+      "path": "../../packages/api-zod"
     },
     {
       "path": "../../lib/integrations-openai-ai-server"
