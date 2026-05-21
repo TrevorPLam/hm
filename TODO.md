@@ -78,7 +78,7 @@ Nothing.
 
 ## D-03 — Delete orphaned lib/integrations/ nested directory
 
-- [ ] **D-03** `PENDING`
+- [x] **D-03** `DONE`
 
 ### Files
 - `lib/integrations/` (nested directory, no `package.json`)
