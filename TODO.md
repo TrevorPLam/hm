@@ -434,7 +434,7 @@ Nothing.
 
 ## M-01 — Move lib/api-spec to packages/api-spec
 
-- [ ] **M-01** `PENDING`
+- [x] **M-01** `DONE`
 
 ### Files
 - `lib/api-spec/` → `packages/api-spec/`
@@ -469,10 +469,10 @@ M-02, V-01.
 
 | ID | File | Action |
 |----|------|--------|
-| M-01-01 | — | Execute `git mv lib/api-spec packages/api-spec`. |
-| M-01-02 | `packages/api-spec/orval.config.ts` | Change `const apiClientReactSrc = path.resolve(root, 'lib', 'api-client-react', 'src')` to `const apiClientReactSrc = path.resolve(root, 'packages', 'api-client', 'src')`. |
-| M-01-03 | `packages/api-spec/orval.config.ts` | Change `const apiZodSrc = path.resolve(root, 'lib', 'api-zod', 'src')` to `const apiZodSrc = path.resolve(root, 'packages', 'api-zod', 'src')`. |
-| M-01-04 | — | Run `pnpm install` from root. Confirm `@workspace/api-spec` resolves correctly. |
+| M-01-01 | — | Execute `git mv lib/api-spec packages/api-spec`. ✅ |
+| M-01-02 | `packages/api-spec/orval.config.ts` | Change `const apiClientReactSrc = path.resolve(root, 'lib', 'api-client-react', 'src')` to `const apiClientReactSrc = path.resolve(root, 'packages', 'api-client', 'src')`. ✅ |
+| M-01-03 | `packages/api-spec/orval.config.ts` | Change `const apiZodSrc = path.resolve(root, 'lib', 'api-zod', 'src')` to `const apiZodSrc = path.resolve(root, 'packages', 'api-zod', 'src')`. ✅ |
+| M-01-04 | — | Run `pnpm install` from root. Confirm `@workspace/api-spec` resolves correctly. ✅ |
 
 ***
 
