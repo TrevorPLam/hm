@@ -730,7 +730,7 @@ Nothing.
 
 ## C-01 — Consolidate workspace glob patterns
 
-- [ ] **C-01** `PENDING`
+- [x] **C-01** `DONE`
 
 ### Files
 - `pnpm-workspace.yaml`
@@ -769,13 +769,17 @@ V-01, V-02.
 | C-01-03 | `pnpm-workspace.yaml` | Remove the `- 'lib/integrations*'` entry (or whichever glob currently covers the integrations packages). |
 | C-01-04 | `pnpm-workspace.yaml` | Add explicit entry `- 'lib/integrations-openai-ai-server'`. |
 | C-01-05 | — | Run `pnpm install` from root. Confirm exit 0 and no `ERR_PNPM_WORKSPACE_PKG_NOT_FOUND` errors. |
-| C-01-06 | — | Run `pnpm list -r --depth 0`. Confirm `@workspace/integrations-openai-ai-server` appears and no deleted-package names appear in the output. |
+| C-01-06 | — | Run `pnpm list -r --depth 0`. Confirm `@workspace/integrations-openai-ai-server` appears and no deleted-package names appear in the output. ✅ |
+
+### Implementation Notes
+- All workspace glob patterns successfully consolidated
+- Verified all 10 workspace packages are recognized: @workspace/api, @workspace/mobile, @workspace/integrations-openai-ai-server, @workspace/api-client, @workspace/api-spec, @workspace/api-zod, @workspace/db, @workspace/ui, @workspace/scripts
 
 ***
 
 ## C-02 — Normalize tsconfig.base.json
 
-- [ ] **C-02** `PENDING`
+- [x] **C-02** `DONE`
 
 ### Files
 - `tsconfig.base.json`
@@ -810,7 +814,12 @@ V-01, V-02.
 |----|------|--------|
 | C-02-01 | `tsconfig.base.json` | Review for stale or deleted package references. |
 | C-02-02 | `tsconfig.base.json` | Remove or rewrite any obsolete shared path assumptions. |
-| C-02-03 | — | Run `pnpm -w run typecheck:libs` or equivalent root typecheck graph check. Confirm exit 0. |
+| C-02-03 | — | Run `pnpm -w run typecheck:libs` or equivalent root typecheck graph check. Confirm exit 0. ✅ |
+
+### Implementation Notes
+- tsconfig.base.json contains only compiler options, no path references
+- No changes required - base config is already valid for new workspace layout
+- Verified with `pnpm -r run typecheck` - all packages pass typecheck successfully
 
 ***
 
