@@ -683,7 +683,7 @@ Nothing.
 
 ## M-06 — Move artifacts/mobile to apps/mobile
 
-- [ ] **M-06** `PENDING`
+- [x] **M-06** `DONE`
 
 ### Files
 - `artifacts/mobile/` → `apps/mobile/`
@@ -721,7 +721,10 @@ Nothing.
 | M-06-01 | — | Execute `git mv artifacts/mobile apps/mobile`. |
 | M-06-02 | `apps/mobile/package.json` | Verify the dependency key is `@workspace/api-client`, not `@workspace/api-client-react`. No edit required if M-03 completed correctly. |
 | M-06-03 | — | Run `pnpm install` from root. Confirm exit 0. |
-| M-06-04 | — | Run `pnpm --filter @workspace/mobile run typecheck`. Confirm exit 0. |
+| M-06-04 | — | Run `pnpm --filter @workspace/mobile run typecheck`. Confirm exit 0. ✅ |
+
+### Implementation Notes
+- git mv failed with permission error on Windows; used xcopy + git rm + git add as workaround (same as M-02, M-03, M-04, and M-05)
 
 ***
 

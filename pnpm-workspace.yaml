@@ -35,12 +35,10 @@ minimumReleaseAgeExclude:
   - stripe-replit-sync
 
 packages:
-  - artifacts/*
-  - lib/*
-  - lib/integrations/*
   - scripts
   - apps/*
   - packages/*
+  - lib/integrations-openai-ai-server
 
 catalog:
   '@tailwindcss/vite': ^4.1.14
