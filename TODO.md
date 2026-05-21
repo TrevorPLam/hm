@@ -927,7 +927,7 @@ V-02.
 
 ## V-01 — Regenerate API artifacts
 
-- [ ] **V-01** `PENDING`
+- [x] **V-01** `DONE`
 
 ### Files
 - `packages/api-spec/`
@@ -965,7 +965,14 @@ V-02.
 |----|------|--------|
 | V-01-01 | `packages/api-spec/` | Run the package’s codegen script. |
 | V-01-02 | — | Confirm generated files land in `packages/api-client/src/generated` and `packages/api-zod/src/generated` as expected. |
-| V-01-03 | — | If codegen fails, fix path or dependency issues before continuing. |
+| V-01-03 | — | If codegen fails, fix path or dependency issues before continuing. ✅ |
+
+### Implementation Notes
+- Codegen ran successfully using Orval v8.9.1
+- Generated API client files in packages/api-client/src/generated (api.schemas.ts, api.ts)
+- Generated Zod schema files in packages/api-zod/src/generated (api.ts, types/)
+- No path or dependency issues encountered
+- Working tree clean - changes were automatically committed by codegen
 
 ***
 
