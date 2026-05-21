@@ -118,7 +118,7 @@ Nothing.
 
 ## D-04 — Delete scripts/src/hello.ts
 
-- [ ] **D-04** `PENDING`
+- [x] **D-04** `DONE`
 
 ### Files
 - `scripts/src/hello.ts`
