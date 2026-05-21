@@ -349,54 +349,7 @@ Nothing.
 
 ***
 
-## D-06 — Delete Replit-specific files
-
-- [ ] **D-06** `PENDING`
-
-### Files
-- `.replit` (root)
-- `.replitignore` (root)
-- `replit.md` (root)
-- `.agents/` (root)
-- `attached_assets/` (root)
-- `repository.md` (root)
-
-### Definition of Done
-All Replit-specific files and directories are deleted from the repository. No references to them remain in any config or script.
-
-### Out of Scope
-- Do not delete any non-Replit-specific files.
-- Do not modify any other root files.
-
-### Rules
-- Verify no script or config references these files before deletion.
-- Single `git rm` commit for all files: `chore: remove Replit-specific files`.
-
-### Pattern
-Platform-specific cleanup.
-
-### Anti-Patterns
-- Do not move or archive these files.
-- Do not add `.gitignore` entries for them.
-
-### Imports / Exports
-None.
-
-### Depends On
-Nothing.
-
-### Blocks
-Nothing.
-
-| ID | File | Action |
-|----|------|--------|
-| D-06-01 | — | Run `grep -r "\.replit\|replit\.md\|\.agents\|attached_assets\|repository\.md" . --include="*.json" --include="*.yaml" --include="*.ts" --include="*.sh"`. Confirm zero references outside the files themselves. |
-| D-06-02 | — | Execute `git rm .replit .replitignore replit.md .agents attached_assets repository.md` from the repo root. |
-| D-06-03 | — | Run `pnpm install` from root. Confirm exit 0. |
-
-***
-
-## D-07 — Clean pnpm-workspace.yaml Replit-specific entries
+## D-07 — Clean pnpm-workspace.yaml platform-specific and stale entries
 
 - [ ] **D-07** `PENDING`
 
@@ -404,22 +357,24 @@ Nothing.
 - `pnpm-workspace.yaml`
 
 ### Definition of Done
-`pnpm-workspace.yaml` no longer contains Replit-specific catalog entries, Replit-specific minimumReleaseAgeExclude entries, or platform-specific overrides. The `minimumReleaseAge: 1440` setting remains for security. `pnpm install` exits 0.
+`pnpm-workspace.yaml` no longer contains stale catalog entries for deleted mockup-sandbox Replit plugins. Platform-specific overrides that restrict to `linux-x64-gnu` are removed for cross-platform compatibility. The `@replit/*` and `stripe-replit-sync` entries in `minimumReleaseAgeExclude` remain (Replit is still in use). The `minimumReleaseAge: 1440` setting remains for security. `pnpm install` exits 0.
 
 ### Out of Scope
 - Do not remove the `minimumReleaseAge: 1440` setting itself — this is good security practice.
+- Do not remove `@replit/*` or `stripe-replit-sync` from `minimumReleaseAgeExclude` — Replit is still in use.
 - Do not modify any other pnpm-workspace.yaml settings.
 
 ### Rules
 - Remove catalog entries for `@replit/vite-plugin-cartographer`, `@replit/vite-plugin-dev-banner`, `@replit/vite-plugin-runtime-error-modal` — these are only used by mockup-sandbox which is deleted in D-05.
-- Remove `@replit/*` and `stripe-replit-sync` from `minimumReleaseAgeExclude` — these are Replit-specific.
-- Remove platform-specific overrides that exclude every platform except `linux-x64-gnu` for esbuild, lightningcss, rollup, and expo/ngrok-bin — these break the workspace on non-Linux systems.
+- Keep `@replit/*` and `stripe-replit-sync` in `minimumReleaseAgeExclude` — Replit is still in use.
+- Remove platform-specific overrides that exclude every platform except `linux-x64-gnu` for esbuild, lightningcss, rollup, and expo/ngrok-bin — these break the workspace on Windows/macOS.
 
 ### Pattern
-Platform-agnostic workspace config.
+Cross-platform workspace config with Replit support retained.
 
 ### Anti-Patterns
 - Do not leave platform-specific overrides that would break the workspace on Windows or macOS.
+- Do not remove Replit-specific minimumReleaseAgeExclude entries.
 
 ### Imports / Exports
 None.
@@ -433,9 +388,8 @@ Nothing.
 | ID | File | Action |
 |----|------|--------|
 | D-07-01 | `pnpm-workspace.yaml` | Remove catalog entries for `@replit/vite-plugin-cartographer`, `@replit/vite-plugin-dev-banner`, `@replit/vite-plugin-runtime-error-modal`. |
-| D-07-02 | `pnpm-workspace.yaml` | Remove `@replit/*` and `stripe-replit-sync` from `minimumReleaseAgeExclude`. |
-| D-07-03 | `pnpm-workspace.yaml` | Remove platform-specific overrides for esbuild, lightningcss, rollup, and expo/ngrok-bin that restrict to `linux-x64-gnu`. |
-| D-07-04 | — | Run `pnpm install` from root. Confirm exit 0. |
+| D-07-02 | `pnpm-workspace.yaml` | Remove platform-specific overrides for esbuild, lightningcss, rollup, and expo/ngrok-bin that restrict to `linux-x64-gnu`. |
+| D-07-03 | — | Run `pnpm install` from root. Confirm exit 0. |
 
 ***
 
