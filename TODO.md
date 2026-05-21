@@ -478,7 +478,7 @@ M-02, V-01.
 
 ## M-02 — Move lib/api-zod to packages/api-zod
 
-- [ ] **M-02** `PENDING`
+- [x] **M-02** `DONE`
 
 ### Files
 - `lib/api-zod/` → `packages/api-zod/`
@@ -511,9 +511,9 @@ M-03.
 
 | ID | File | Action |
 |----|------|--------|
-| M-02-01 | — | Execute `git mv lib/api-zod packages/api-zod`. |
-| M-02-02 | — | Run `pnpm install` from root. Confirm exit 0. |
-| M-02-03 | `packages/api-zod/tsconfig.json` | Verify `extends` path `../../tsconfig.base.json` is still valid (depth is unchanged). No edit required — verification only. |
+| M-02-01 | — | Execute `git mv lib/api-zod packages/api-zod`. ✅ |
+| M-02-02 | — | Run `pnpm install` from root. Confirm exit 0. ✅ |
+| M-02-03 | `packages/api-zod/tsconfig.json` | Verify `extends` path `../../tsconfig.base.json` is still valid (depth is unchanged). No edit required — verification only. ✅ |
 
 ***
 
