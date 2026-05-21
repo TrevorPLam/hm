@@ -523,7 +523,7 @@ M-03.
 
 ## M-03 — Move lib/api-client-react to packages/api-client and rename package
 
-- [ ] **M-03** `PENDING`
+- [x] **M-03** `DONE`
 
 ### Files
 - `lib/api-client-react/` → `packages/api-client/`
@@ -572,7 +572,11 @@ M-06, V-01.
 | M-03-06 | `artifacts/mobile/app/chat/[id].tsx` | Change all imports from `@workspace/api-client-react` to `@workspace/api-client`. |
 | M-03-07 | `artifacts/mobile/components/ConversationItem.tsx` | Change `import type { OpenaiConversation } from '@workspace/api-client-react'` to `import type { OpenaiConversation } from '@workspace/api-client'`. |
 | M-03-08 | — | Run `pnpm install` from root. Confirm `@workspace/api-client` resolves and no `api-client-react` references remain in the mobile package's lockfile entries. |
-| M-03-09 | — | Run `pnpm --filter @workspace/mobile run typecheck`. Confirm exit 0. |
+| M-03-09 | — | Run `pnpm --filter @workspace/mobile run typecheck`. Confirm exit 0. ✅ |
+
+### Implementation Notes
+- git mv failed with permission error on Windows; used xcopy + git rm + git add as workaround (same as M-02)
+- Additional fix required: updated `artifacts/mobile/tsconfig.json` reference from `../../lib/api-client-react` to `../../packages/api-client` to fix typecheck errors
 
 ***
 
