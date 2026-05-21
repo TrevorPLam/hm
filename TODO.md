@@ -12,9 +12,30 @@ Indicator: `PENDING` | `IN PROGRESS` | `BLOCKED` | `DONE`
 
 ***
 
+## ISSUE-001 — Fix mobile typecheck error in useColors.ts
+
+- [ ] **ISSUE-001** `PENDING`
+
+### Files
+- `artifacts/mobile/hooks/useColors.ts`
+
+### Definition of Done
+`pnpm --filter @workspace/mobile run typecheck` exits 0 with no TypeScript errors.
+
+### Context
+Pre-existing type error discovered during D-02 QA. Type incompatibility in useColors.ts line 21: `colors` object has mixed types (strings and `radius: number`) but is being cast to `Record<string, typeof colors.light>` which expects all values to match the color palette type.
+
+### Depends On
+Nothing.
+
+### Blocks
+Nothing.
+
+***
+
 ## D-02 — Delete lib/integrations-openai-ai-react
 
-- [ ] **D-02** `PENDING`
+- [x] **D-02** `DONE`
 
 ### Files
 - `lib/integrations-openai-ai-react/` (entire directory, flat path)
