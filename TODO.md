@@ -213,7 +213,7 @@ E-01, R-02, M-01, M-02, M-03, M-04, M-05, M-06.
 
 ## R-02 — Add new glob patterns to pnpm-workspace.yaml
 
-- [ ] **R-02** `PENDING`
+- [x] **R-02** `DONE`
 
 ### Files
 - `pnpm-workspace.yaml`
