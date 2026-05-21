@@ -825,7 +825,7 @@ V-01, V-02.
 
 ## C-02a — Update root tsconfig.json project references
 
-- [ ] **C-02a** `PENDING`
+- [x] **C-02a** `DONE`
 
 ### Files
 - `tsconfig.json` (root)
@@ -865,7 +865,16 @@ V-02.
 | C-02a-03 | `tsconfig.json` (root) | Change `{ "path": "./lib/api-zod" }` to `{ "path": "./packages/api-zod" }`. |
 | C-02a-04 | `tsconfig.json` (root) | Add `{ "path": "./packages/ui" }` to the references array. |
 | C-02a-05 | `tsconfig.json` (root) | Verify `{ "path": "./lib/integrations-openai-ai-server" }` is present and unchanged. |
-| C-02a-06 | — | Run `pnpm run typecheck` from root. Confirm exit 0. |
+| C-02a-06 | — | Run `pnpm run typecheck` from root. Confirm exit 0. ✅ |
+
+### Implementation Notes
+- Updated all five project references in root tsconfig.json
+- Changed: `./lib/db` → `./packages/db`
+- Changed: `./lib/api-client-react` → `./packages/api-client`
+- Changed: `./lib/api-zod` → `./packages/api-zod`
+- Added: `./packages/ui` (new package from E-01)
+- Verified: `./lib/integrations-openai-ai-server` unchanged
+- All typechecks pass successfully
 
 ***
 
