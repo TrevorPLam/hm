@@ -254,7 +254,7 @@ M-01, M-02, M-03, M-04, M-05, M-06.
 
 ## E-01 — Extract mockup-sandbox UI components to packages/ui
 
-- [ ] **E-01** `PENDING`
+- [x] **E-01** `DONE`
 
 ### Files
 - `packages/ui/` (destination, scaffolded in R-01)
