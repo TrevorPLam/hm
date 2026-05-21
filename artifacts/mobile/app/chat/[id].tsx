@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Platform,
   ActivityIndicator,
+  Share,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -23,6 +24,7 @@ import { useColors } from "@/hooks/useColors";
 import { MessageBubble } from "@/components/MessageBubble";
 import { TypingIndicator } from "@/components/TypingIndicator";
 import { ChatInput } from "@/components/ChatInput";
+import { SuggestedPrompts } from "@/components/SuggestedPrompts";
 import { streamChat } from "@/lib/api";
 
 let msgCounter = 0;
@@ -31,7 +33,7 @@ function uid(): string {
   return `msg-${Date.now()}-${msgCounter}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-interface Message {
+export interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
@@ -45,10 +47,12 @@ export default function ChatScreen() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const abortRef = useRef<AbortController | null>(null);
+  const flatListRef = useRef<FlatList>(null);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [showTyping, setShowTyping] = useState(false);
+  const [streamError, setStreamError] = useState<string | null>(null);
   const initializedRef = useRef(false);
 
   const { data: conversation, isLoading } = useGetOpenaiConversation(
@@ -70,10 +74,14 @@ export default function ChatScreen() {
     }
   }, [conversation?.messages]);
 
+  const scrollToBottom = useCallback(() => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  }, []);
+
   const handleSend = useCallback(
     async (text: string) => {
       if (isStreaming) return;
-
+      setStreamError(null);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
       const userMsg: Message = { id: uid(), role: "user", content: text };
@@ -110,28 +118,33 @@ export default function ChatScreen() {
                 return updated;
               });
             }
+            scrollToBottom();
           },
           controller.signal
         );
 
-        // Invalidate conversation queries after streaming
+        // Invalidate after streaming done
         queryClient.invalidateQueries({
           queryKey: getGetOpenaiConversationQueryKey(conversationId),
         });
         queryClient.invalidateQueries({
           queryKey: getListOpenaiConversationsQueryKey(),
         });
-      } catch (err: any) {
-        if (err?.name !== "AbortError") {
+      } catch (err: unknown) {
+        const error = err as { name?: string };
+        if (error?.name !== "AbortError") {
           setShowTyping(false);
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: uid(),
-              role: "assistant",
-              content: "Sorry, something went wrong. Please try again.",
-            },
-          ]);
+          setStreamError("Something went wrong. Tap to retry.");
+          if (!assistantAdded) {
+            setMessages((prev) => [
+              ...prev,
+              {
+                id: uid(),
+                role: "assistant",
+                content: "Sorry, I ran into an error. Please try again.",
+              },
+            ]);
+          }
         }
       } finally {
         setIsStreaming(false);
@@ -139,16 +152,25 @@ export default function ChatScreen() {
         abortRef.current = null;
       }
     },
-    [conversationId, isStreaming, queryClient]
+    [conversationId, isStreaming, queryClient, scrollToBottom]
   );
 
   const handleStop = useCallback(() => {
     abortRef.current?.abort();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   }, []);
 
-  const topPad =
-    Platform.OS === "web" ? Math.max(insets.top, 67) : insets.top;
+  const handleShare = useCallback(async () => {
+    if (!messages.length) return;
+    const text = messages
+      .map((m) => `${m.role === "user" ? "You" : "Aria"}: ${m.content}`)
+      .join("\n\n");
+    try {
+      await Share.share({ message: text, title: conversation?.title ?? "Chat" });
+    } catch {}
+  }, [messages, conversation?.title]);
 
+  const topPad = Platform.OS === "web" ? Math.max(insets.top, 67) : insets.top;
   const reversed = [...messages].reverse();
 
   return (
@@ -166,21 +188,35 @@ export default function ChatScreen() {
       >
         <Pressable
           onPress={() => router.back()}
-          hitSlop={10}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          hitSlop={12}
+          style={({ pressed }) => [
+            styles.headerBtn,
+            { opacity: pressed ? 0.5 : 1 },
+          ]}
         >
           <Feather name="arrow-left" size={22} color={colors.foreground} />
         </Pressable>
+
         <Text
           style={[styles.headerTitle, { color: colors.foreground }]}
           numberOfLines={1}
         >
           {conversation?.title ?? "Chat"}
         </Text>
-        <View style={styles.headerRight} />
+
+        <Pressable
+          onPress={handleShare}
+          hitSlop={12}
+          style={({ pressed }) => [
+            styles.headerBtn,
+            { opacity: pressed ? 0.5 : 1 },
+          ]}
+        >
+          <Feather name="share" size={20} color={colors.foreground} />
+        </Pressable>
       </View>
 
-      {/* Messages */}
+      {/* Messages + Input */}
       <KeyboardAvoidingView
         style={styles.flex}
         behavior="padding"
@@ -192,35 +228,42 @@ export default function ChatScreen() {
           </View>
         ) : (
           <FlatList
+            ref={flatListRef}
             data={reversed}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <MessageBubble message={item} />}
             inverted={messages.length > 0}
             ListHeaderComponent={showTyping ? <TypingIndicator /> : null}
-            keyboardDismissMode="interactive"
-            keyboardShouldPersistTaps="handled"
-            scrollEnabled={!!messages.length}
-            contentContainerStyle={styles.listContent}
             ListFooterComponent={
               messages.length === 0 && !showTyping ? (
-                <View style={styles.emptyChat}>
-                  <Text style={[styles.emptyChatTitle, { color: colors.foreground }]}>
-                    What can I help you with?
-                  </Text>
-                  <Text style={[styles.emptyChatSub, { color: colors.mutedForeground }]}>
-                    Ask me anything — I'm here to help.
-                  </Text>
-                </View>
+                <SuggestedPrompts onSelect={handleSend} />
               ) : null
             }
+            keyboardDismissMode="interactive"
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={[
+              styles.listContent,
+              messages.length === 0 && styles.listEmpty,
+            ]}
           />
+        )}
+
+        {/* Stream error banner */}
+        {streamError && (
+          <Pressable
+            onPress={() => setStreamError(null)}
+            style={[styles.errorBanner, { backgroundColor: colors.destructive }]}
+          >
+            <Feather name="alert-circle" size={14} color="#fff" />
+            <Text style={styles.errorText}>{streamError}</Text>
+          </Pressable>
         )}
 
         <View
           style={{
             paddingBottom:
               Platform.OS === "web"
-                ? 34
+                ? 20
                 : insets.bottom > 0
                 ? insets.bottom
                 : 8,
@@ -238,28 +281,28 @@ export default function ChatScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  flex: {
-    flex: 1,
-  },
+  root: { flex: 1 },
+  flex: { flex: 1 },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingBottom: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    gap: 12,
+    gap: 8,
+  },
+  headerBtn: {
+    width: 38,
+    height: 38,
+    alignItems: "center",
+    justifyContent: "center",
   },
   headerTitle: {
     flex: 1,
     fontSize: 16,
     fontFamily: "Inter_600SemiBold",
     textAlign: "center",
-  },
-  headerRight: {
-    width: 22,
+    letterSpacing: -0.2,
   },
   center: {
     flex: 1,
@@ -268,24 +311,26 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingVertical: 12,
+    paddingHorizontal: 4,
   },
-  emptyChat: {
-    flex: 1,
+  listEmpty: {
+    flexGrow: 1,
+    justifyContent: "flex-end",
+  },
+  errorBanner: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 40,
-    paddingTop: 80,
-    gap: 10,
+    gap: 6,
+    marginHorizontal: 16,
+    marginBottom: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 10,
   },
-  emptyChatTitle: {
-    fontSize: 22,
-    fontFamily: "Inter_600SemiBold",
-    textAlign: "center",
-    letterSpacing: -0.3,
-  },
-  emptyChatSub: {
-    fontSize: 15,
-    fontFamily: "Inter_400Regular",
-    textAlign: "center",
+  errorText: {
+    color: "#fff",
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    flex: 1,
   },
 });
