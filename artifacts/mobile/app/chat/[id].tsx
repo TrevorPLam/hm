@@ -18,7 +18,7 @@ import {
   useGetOpenaiConversation,
   getGetOpenaiConversationQueryKey,
   getListOpenaiConversationsQueryKey,
-} from "@workspace/api-client-react";
+} from "@workspace/api-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useColors } from "@/hooks/useColors";
 import { MessageBubble } from "@/components/MessageBubble";

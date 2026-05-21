@@ -21,7 +21,7 @@ import {
   useDeleteOpenaiConversation,
   getListOpenaiConversationsQueryKey,
   type OpenaiConversation,
-} from "@workspace/api-client-react";
+} from "@workspace/api-client";
 import { useColors } from "@/hooks/useColors";
 import { ConversationItem } from "@/components/ConversationItem";
 

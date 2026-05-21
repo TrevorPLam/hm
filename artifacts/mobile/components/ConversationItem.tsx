@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
-import type { OpenaiConversation } from "@workspace/api-client-react";
+import type { OpenaiConversation } from "@workspace/api-client";
 
 interface Props {
   conversation: OpenaiConversation;
