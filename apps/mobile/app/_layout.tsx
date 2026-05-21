@@ -19,10 +19,17 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 const apiBaseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
 const domain = process.env.EXPO_PUBLIC_DOMAIN;
 
+console.log('EXPO_PUBLIC_API_BASE_URL:', apiBaseUrl);
+console.log('EXPO_PUBLIC_DOMAIN:', domain);
+
 if (apiBaseUrl) {
+  console.log('Setting base URL to:', apiBaseUrl);
   setBaseUrl(apiBaseUrl);
 } else if (domain) {
+  console.log('Setting base URL to:', `https://${domain}`);
   setBaseUrl(`https://${domain}`);
+} else {
+  console.log('No base URL set, using default');
 }
 
 SplashScreen.preventAutoHideAsync();
