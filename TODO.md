@@ -515,6 +515,10 @@ M-03.
 | M-02-02 | — | Run `pnpm install` from root. Confirm exit 0. ✅ |
 | M-02-03 | `packages/api-zod/tsconfig.json` | Verify `extends` path `../../tsconfig.base.json` is still valid (depth is unchanged). No edit required — verification only. ✅ |
 
+### Implementation Notes
+- git mv failed with permission error on Windows; used xcopy + git rm + git add as workaround
+- Additional fix required: updated `artifacts/api-server/tsconfig.json` reference from `../../lib/api-zod` to `../../packages/api-zod` to fix typecheck errors
+
 ***
 
 ## M-03 — Move lib/api-client-react to packages/api-client and rename package
