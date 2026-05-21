@@ -311,7 +311,7 @@ D-05.
 
 ## D-05 — Delete artifacts/mockup-sandbox
 
-- [ ] **D-05** `PENDING`
+- [x] **D-05** `DONE`
 
 ### Files
 - `artifacts/mockup-sandbox/` (entire directory)
