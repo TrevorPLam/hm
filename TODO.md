@@ -395,7 +395,7 @@ Nothing.
 
 ## D-08 — Clean stale .gitignore entries
 
-- [ ] **D-08** `PENDING`
+- [x] **D-08** `DONE`
 
 ### Files
 - `.gitignore`
