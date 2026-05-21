@@ -14,7 +14,7 @@ Indicator: `PENDING` | `IN PROGRESS` | `BLOCKED` | `DONE`
 
 ## ISSUE-001 — Fix mobile typecheck error in useColors.ts
 
-- [ ] **ISSUE-001** `PENDING`
+- [x] **ISSUE-001** `DONE`
 
 ### Files
 - `artifacts/mobile/hooks/useColors.ts`

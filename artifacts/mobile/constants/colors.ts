@@ -1,4 +1,35 @@
-const colors = {
+type Palette = {
+  text: string;
+  tint: string;
+  background: string;
+  foreground: string;
+  card: string;
+  cardForeground: string;
+  primary: string;
+  primaryForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+  muted: string;
+  mutedForeground: string;
+  accent: string;
+  accentForeground: string;
+  destructive: string;
+  destructiveForeground: string;
+  border: string;
+  input: string;
+  userBubble: string;
+  userBubbleText: string;
+  assistantBubble: string;
+  assistantBubbleText: string;
+};
+
+type Colors = {
+  light: Palette;
+  dark?: Palette;
+  radius: number;
+};
+
+const colors: Colors = {
   light: {
     text: "#0D0D0D",
     tint: "#1A73E8",
